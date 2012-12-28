@@ -1,0 +1,40 @@
+have_library: checking for SHPCreate() in -llibshp.a... -------------------- no
+
+"/usr/bin/gcc-4.2 -o conftest -I/Users/oq/.rvm/rubies/ruby-1.9.3-p327/include/ruby-1.9.1/x86_64-darwin12.2.0 -I/Users/oq/.rvm/rubies/ruby-1.9.3-p327/include/ruby-1.9.1/ruby/backward -I/Users/oq/.rvm/rubies/ruby-1.9.3-p327/include/ruby-1.9.1 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE   -I/Users/mpapis/.sm/pkg/active/include -pipe conftest.c  -L. -L/Users/oq/.rvm/rubies/ruby-1.9.3-p327/lib -L. -Bstatic -L/Users/mpapis/.sm/pkg/active/lib   -arch x86_64   -lruby-static  -lpthread -ldl -lobjc "
+ld: warning: directory not found for option '-L/Users/mpapis/.sm/pkg/active/lib'
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main() {return 0;}
+/* end */
+
+"/usr/bin/gcc-4.2 -o conftest -I/Users/oq/.rvm/rubies/ruby-1.9.3-p327/include/ruby-1.9.1/x86_64-darwin12.2.0 -I/Users/oq/.rvm/rubies/ruby-1.9.3-p327/include/ruby-1.9.1/ruby/backward -I/Users/oq/.rvm/rubies/ruby-1.9.3-p327/include/ruby-1.9.1 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE   -I/Users/mpapis/.sm/pkg/active/include -pipe conftest.c  -L. -L/Users/oq/.rvm/rubies/ruby-1.9.3-p327/lib -L. -Bstatic -L/Users/mpapis/.sm/pkg/active/lib   -arch x86_64   -lruby-static -llibshp.a  -lpthread -ldl -lobjc "
+conftest.c: In function ‘t’:
+conftest.c:5: error: ‘SHPCreate’ undeclared (first use in this function)
+conftest.c:5: error: (Each undeclared identifier is reported only once
+conftest.c:5: error: for each function it appears in.)
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: /*top*/
+4: int main() {return 0;}
+5: int t() { void ((*volatile p)()); p = (void ((*)()))SHPCreate; return 0; }
+/* end */
+
+"/usr/bin/gcc-4.2 -o conftest -I/Users/oq/.rvm/rubies/ruby-1.9.3-p327/include/ruby-1.9.1/x86_64-darwin12.2.0 -I/Users/oq/.rvm/rubies/ruby-1.9.3-p327/include/ruby-1.9.1/ruby/backward -I/Users/oq/.rvm/rubies/ruby-1.9.3-p327/include/ruby-1.9.1 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE   -I/Users/mpapis/.sm/pkg/active/include -pipe conftest.c  -L. -L/Users/oq/.rvm/rubies/ruby-1.9.3-p327/lib -L. -Bstatic -L/Users/mpapis/.sm/pkg/active/lib   -arch x86_64   -lruby-static -llibshp.a  -lpthread -ldl -lobjc "
+ld: warning: directory not found for option '-L/Users/mpapis/.sm/pkg/active/lib'
+ld: library not found for -llibshp.a
+collect2: ld returned 1 exit status
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: /*top*/
+4: int main() {return 0;}
+5: int t() { SHPCreate(); return 0; }
+/* end */
+
+--------------------
+
