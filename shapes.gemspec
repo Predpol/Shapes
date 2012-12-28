@@ -8,12 +8,13 @@ Gem::Specification.new do |gem|
   gem.version       = Shapes::VERSION
   gem.authors       = ["Omar Qazi"]
   gem.email         = ["omar@predpol.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.description   = %q{A simple ruby library for writing shape files}
+  gem.summary       = %q{Yeah, read the description}
+  gem.homepage      = "http://www.predpol.com/"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
+  gem.extensions = ['ext/shapes/extconf.rb']
 end
