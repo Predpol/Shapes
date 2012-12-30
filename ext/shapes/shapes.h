@@ -1,0 +1,3 @@
+struct rbShapeFile {
+	SHPHandle fileHandle;	
+};
