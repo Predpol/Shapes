@@ -10,7 +10,7 @@ void Init_shapeslib() {
 	rb_define_module_function(shapesModule,"open_shape",OpenSHP,1);
 	rb_define_module_function(shapesModule,"close_shape",CloseSHP,1);
 	rb_define_module_function(shapesModule,"create_shape",CreateSHP,2);
-	rb_define_module_function(shapesModule,"create_object",CreateObject,5);
+	rb_define_module_function(shapesModule,"create_object",CreateObject,6);
 }
 
 VALUE OpenSHP(VALUE klass,VALUE filename) {
@@ -20,6 +20,7 @@ VALUE OpenSHP(VALUE klass,VALUE filename) {
 	
 	char *cFileName = StringValuePtr(filename);
 	openedFile->fileHandle = SHPOpen(cFileName,"rb+");
+	openedFile->open = 1;
 	
 	rb_obj_call_init(rubyObject,0,0);
 	return rubyObject;
@@ -42,15 +43,20 @@ VALUE CreateSHP(VALUE klass,VALUE filename,VALUE shapeType) {
 	}
 	
 	createdFile->fileHandle = SHPCreate(cFileName,shape);
+	createdFile->open = 1;
 	
 	rb_obj_call_init(rubyObject,0,0);
 	return rubyObject;
 }
 
-VALUE CreateObject(VALUE klass,VALUE handle,VALUE shapeType,VALUE x,VALUE y,VALUE z) {
+VALUE CreateObject(VALUE klass,VALUE handle,VALUE shapeType,VALUE numVertices,VALUE x,VALUE y,VALUE z) {
 	struct rbShapeFile *shapeFile;
 	Data_Get_Struct(handle,struct rbShapeFile,shapeFile);
 	SHPHandle fileHandle = shapeFile->fileHandle;
+	
+	if (!shapeFile->open) {
+		return Qfalse;
+	}
 	
 	int xlen = RARRAY_LEN(x);
 	int ylen = RARRAY_LEN(y);
@@ -100,12 +106,15 @@ VALUE CloseSHP(VALUE klass,VALUE handle) {
 	struct rbShapeFile *shapeFile;
 	Data_Get_Struct(handle,struct rbShapeFile,shapeFile);
 	SHPHandle fileHandle = shapeFile->fileHandle;
+	shapeFile->open = 0;
 	SHPClose(fileHandle);
 	return Qtrue;
 }
 
 void freeShapeFile(struct rbShapeFile *f) {
-	SHPClose(f->fileHandle);
+	if (f->open) {
+		SHPClose(f->fileHandle);	
+	}
 }
 
 int ShapeFromString(const char *cShapeType) {
