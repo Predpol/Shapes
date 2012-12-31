@@ -1,22 +1,33 @@
 module Shapes
-  class Point
-    attr_accessor :longitude, :latitude, :altitude, :projection
+  class GeoObject
+    attr_accessor :attributes
     
-    def initialize(lat = nil,long = nil,alt = nil,proj = :wgs84)
+    def initialize(*args)
+      self.attributes = Hash.new
+    end  
+  end
+  
+  class Point < GeoObject
+    attr_accessor :longitude, :latitude, :altitude
+    
+    def initialize(lat = nil,long = nil,alt = nil,attributes = {})
+      super
       self.latitude   = lat
       self.longitude  = long
       self.altitude = alt
-      self.projection = proj
+      self.attributes = attributes
     end
   end
   
-  class Polygon
+  class Polygon < GeoObject
     attr_accessor :vertices, :num_vertices
     
-    def initialize(vertices = nil,num_vertices = 4)
+    def initialize(vertices = nil,num_vertices = 4,attributes = {})
+      super
       self.vertices = vertices if Array === vertices
       self.vertices ||= []
       self.num_vertices = num_vertices
+      self.attributes = {}
     end
     
     def add_point(p)

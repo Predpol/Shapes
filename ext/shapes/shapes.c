@@ -260,9 +260,7 @@ VALUE RDBFAddField(VALUE klass,VALUE handle,VALUE fieldName,VALUE fieldType,VALU
 	int cDecimals = NUM2INT(decimals);
 	
 	DBFFieldType ft = FieldTypeFromString(cFieldType);
-	printf("so far so nig\n");
 	int fieldNumber = DBFAddField(d,cFieldName,ft,cWidth,cDecimals);
-	printf("made it through that\n");
 	VALUE rv = INT2NUM(fieldNumber);
 	
 	return rv;
