@@ -64,6 +64,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <ruby.h>
 
 SHP_CVSID("$Id: safileio.c,v 1.4 2008-01-16 20:05:14 bram Exp $");
 
@@ -165,7 +166,7 @@ int SADRemove( const char *filename )
 void SADError( const char *message )
 
 {
-    fprintf( stderr, "%s\n", message );
+	rb_raise(rb_eIOError,message);
 }
 
 /************************************************************************/
