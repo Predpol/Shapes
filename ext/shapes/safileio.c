@@ -166,7 +166,7 @@ int SADRemove( const char *filename )
 void SADError( const char *message )
 
 {
-	rb_raise(rb_eIOError,message);
+	rb_raise(rb_eIOError,"%s",message);
 }
 
 /************************************************************************/
